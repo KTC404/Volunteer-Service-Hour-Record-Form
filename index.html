@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แบบบันทึก ชั่วโมง นศท. จิตอาสา - โรงเรียนพานทองสภาชนูปถัมภ์</title>
+  
+  <!-- Thai Fonts (Prompt & Sarabun) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20%2232%22%20%2232%22><text y=%2224%22 font-size=%2224%22>🎖️</text></svg>">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <div class="top-navbar-container">
+      <a href="#" class="brand-wrapper" onclick="switchTab('form'); return false;">
+        <div class="brand-emblem">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 10h2v4h-2zm0 5h2v2h-2z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>แบบบันทึก ชั่วโมง นศท. จิตอาสา</h1>
+          <p>โรงเรียนพานทองสภาชนูปถัมภ์ ประจำปี 2569</p>
+        </div>
+      </a>
+
+      <nav class="nav-tabs">
+        <button id="tabBtnForm" class="nav-tab-btn active" onclick="switchTab('form')">
+          <span>📝</span>
+          <span>ทำแบบบันทึก</span>
+        </button>
+        <button id="tabBtnSheet" class="nav-tab-btn" onclick="switchTab('sheet')">
+          <span>📊</span>
+          <span>ตารางชั่วโมงเวร (Sheets)</span>
+        </button>
+        <button id="tabBtnDashboard" class="nav-tab-btn" onclick="switchTab('dashboard')">
+          <span>📋</span>
+          <span>ประวัติการส่ง</span>
+          <span id="badgeSubmissionsCount" class="badge-count">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper" style="max-width: 1040px;">
+
+    <!-- View 1: Form View -->
+    <div id="formView" class="view-panel active">
+      
+      <!-- Form Header Card -->
+      <div class="form-header-card">
+        <div class="header-banner-pattern">
+          <div class="header-insignia">
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.67-3.13 9.07-7 10.18-3.87-1.11-7-5.51-7-10.18V6.3l7-3.12zM12 7c-1.66 0-3 1.34-3 3 0 1.31.84 2.41 2 2.83V16h2v-3.17c1.16-.42 2-1.52 2-2.83 0-1.66-1.34-3-3-3z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="header-content-body">
+          <div class="school-tag">
+            <span>🏫</span> โรงเรียนพานทองสภาชนูปถัมภ์
+          </div>
+          <h2 id="formHeaderTitle">แบบบันทึก ชั่วโมง นศท. จิตอาสา</h2>
+          <p id="formHeaderDesc" class="form-description">
+            ใช้สำหรับบบันทึกชั่วโมงจิตอาสา นักศึกษาวิชาทหาร โรงเรียนพานทองสภาชนูปถัมภ์ 2569
+          </p>
+          <div class="required-notice">
+            <span>* บ่งบอกว่าจำเป็นต้องตอบ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="form-progress-wrapper" id="progressWrapper">
+        <span class="progress-text" id="progressText">หน้า 1 จาก 3</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progressBarFill" style="width: 33.3%;"></div>
+        </div>
+      </div>
+
+      <!-- Dynamic Section Form Container -->
+      <form id="dynamicForm" onsubmit="handleFormSubmit(event)" novalidate>
+        
+        <!-- Section Questions Container -->
+        <div id="sectionContent">
+          <!-- Dynamically populated via JavaScript -->
+        </div>
+
+        <!-- Form Navigation Footer -->
+        <div class="form-footer-actions">
+          <div class="action-buttons-group">
+            <button type="button" id="btnBack" class="btn btn-secondary" onclick="navigatePreviousStep()" style="display: none;">
+              <span>⬅️</span>
+              <span>ย้อนกลับ</span>
+            </button>
+            <button type="button" id="btnNext" class="btn btn-primary" onclick="navigateNextStep()">
+              <span>ถัดไป</span>
+              <span>➡️</span>
+            </button>
+            <button type="submit" id="btnSubmit" class="btn btn-primary" style="display: none;">
+              <span>ส่งข้อมูล</span>
+              <span>✔️</span>
+            </button>
+          </div>
+          
+          <button type="button" class="btn btn-clear" onclick="confirmResetForm()">
+            ล้างแบบฟอร์ม
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+    <!-- View 2: Success Confirmation Screen -->
+    <div id="successView" class="view-panel" style="display: none;">
+      <div class="success-screen-card">
+        <div class="success-check-icon">✓</div>
+        <h2>บันทึกข้อมูลเรียบร้อยแล้ว</h2>
+        <p>แบบบันทึก ชั่วโมง นศท. จิตอาสา ได้รับข้อมูลและรูปภาพหลักฐานของท่านแล้ว</p>
+
+        <!-- Receipt Summary -->
+        <div class="submission-receipt-summary" id="receiptSummaryContent">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div class="success-actions">
+          <button type="button" class="btn btn-primary" onclick="startNewSubmission()">
+            <span>📝</span>
+            <span>ส่งคำตอบเพิ่มอีกรายการ</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="switchTab('sheet')">
+            <span>📊</span>
+            <span>ดูตารางชั่วโมงเวร (Sheets)</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="switchTab('dashboard')">
+            <span>📋</span>
+            <span>ดูประวัติการส่ง</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- View 3: Google Sheets Traffic Duty Matrix View -->
+    <div id="sheetView" class="view-panel" style="display: none;">
+      
+      <!-- Stats Overview for Traffic Duty -->
+      <div class="stats-overview-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <h3 id="sheetTotalStudents">92</h3>
+            <p>นศท. ในระบบทั้งหมด</p>
+          </div>
+        </div>
+        <div class="stat-card traffic">
+          <div class="stat-icon">🚦</div>
+          <div class="stat-info">
+            <h3 id="sheetActiveStudents">0</h3>
+            <p>นศท. ที่มีชั่วโมงเวรจราจร</p>
+          </div>
+        </div>
+        <div class="stat-card personal">
+          <div class="stat-icon">📅</div>
+          <div class="stat-info">
+            <h3 id="sheetTotalDutyDays">1</h3>
+            <p>วันที่ลงปฏิบัติหน้าที่ (วัน)</p>
+          </div>
+        </div>
+        <div class="stat-card hours">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-info">
+            <h3 id="sheetTotalDutyHours">0.0</h3>
+            <p>รวมชั่วโมงเวรจราจรสะสม (ชม.)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sheet Card -->
+      <div class="sheet-card">
+        <div class="sheet-toolbar">
+          
+          <!-- Year Tabs -->
+          <div class="sheet-tabs-pills">
+            <button type="button" class="sheet-tab-pill active" onclick="setSheetYearFilter('all', this)">ทั้งหมด</button>
+            <button type="button" class="sheet-tab-pill" onclick="setSheetYearFilter(1, this)">ปี 1</button>
+            <button type="button" class="sheet-tab-pill" onclick="setSheetYearFilter(2, this)">ปี 2</button>
+            <button type="button" class="sheet-tab-pill" onclick="setSheetYearFilter(3, this)">ปี 3</button>
+          </div>
+
+          <!-- Day Filter -->
+          <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+            <select id="sheetDaySelect" class="filter-select" onchange="renderSheetTable()">
+              <option value="all">ทุกกลุ่มเวร (จันทร์ - ศุกร์)</option>
+              <option value="จันทร์">เวรวันจันทร์</option>
+              <option value="อังคาร">เวรวันอังคาร</option>
+              <option value="พุธ">เวรวันพุธ</option>
+              <option value="พฤหัสบดี">เวรวันพฤหัสบดี</option>
+              <option value="ศุกร์">เวรวันศุกร์</option>
+            </select>
+
+            <input type="text" id="sheetSearchInput" class="text-input" placeholder="🔍 ค้นหาชื่อ นศท..." style="max-width: 180px; padding: 0.45rem 0.75rem;" oninput="renderSheetTable()">
+          </div>
+
+          <!-- Actions -->
+          <div class="action-buttons-group">
+            <button type="button" class="btn btn-secondary" onclick="exportSheetToCSV()" title="ดาวน์โหลดไฟล์ Excel / CSV">
+              <span>📥</span>
+              <span>ส่งออกตาราง Excel</span>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="window.print()" title="พิมพ์ตาราง">
+              <span>🖨️</span>
+              <span>พิมพ์</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Sheet Table Body Container -->
+        <div class="sheet-wrapper-table" id="sheetTableContainer">
+          <!-- Dynamically populated via renderSheetTable() -->
+        </div>
+
+        <!-- Sheet Footer -->
+        <div class="sheet-footer-notice">
+          <div>
+            <span>📌 เกณฑ์การคำนวณ:</span>
+            <span style="font-weight: normal; color: var(--text-muted); margin-left: 0.4rem;">
+              เวรเช้า = 0.5 ชม. | เวรบ่าย = 0.5 ชม. | ลงทั้งเช้าและบ่ายรวมเป็น 1 ชม.
+            </span>
+          </div>
+          <div style="color: #980000;">
+            ติดต่อแจ้งปัญหาได้ที่ น้ำเหนือ หรือ กีต้า
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- View 4: Dashboard & Submission History -->
+    <div id="dashboardView" class="view-panel" style="display: none;">
+      
+      <!-- Stats Overview Cards -->
+      <div class="stats-overview-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📋</div>
+          <div class="stat-info">
+            <h3 id="statTotalSubmissions">0</h3>
+            <p>รายการส่งฟอร์มทั้งหมด</p>
+          </div>
+        </div>
+
+        <div class="stat-card traffic">
+          <div class="stat-icon">🚦</div>
+          <div class="stat-info">
+            <h3 id="statTrafficCount">0</h3>
+            <p>เวรจราจร (30 นาที/ครั้ง)</p>
+          </div>
+        </div>
+
+        <div class="stat-card personal">
+          <div class="stat-icon">👤</div>
+          <div class="stat-info">
+            <h3 id="statPersonalCount">0</h3>
+            <p>จิตอาสาส่วนตัว</p>
+          </div>
+        </div>
+
+        <div class="stat-card hours">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-info">
+            <h3 id="statTotalHours">0</h3>
+            <p>รวมชั่วโมงจิตอาสา (ชม.)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter and Toolbar -->
+      <div class="records-filter-card">
+        <div class="filter-controls">
+          <input type="text" id="filterSearchInput" class="text-input" placeholder="🔍 ค้นหาชื่อนักเรียน, วันที่, หมายเหตุ..." style="max-width: 250px; padding: 0.45rem 0.75rem;" oninput="applyFilters()">
+          
+          <select id="filterTypeSelect" class="filter-select" onchange="applyFilters()">
+            <option value="all">ทุกประเภท</option>
+            <option value="เวรจราจร">บันทึกเวรจราจร</option>
+            <option value="ส่วนตัว">จิตอาสาส่วนตัว</option>
+          </select>
+
+          <select id="filterDaySelect" class="filter-select" onchange="applyFilters()">
+            <option value="all">ทุกกลุ่มวัน</option>
+            <option value="จันทร์">วันจันทร์</option>
+            <option value="อังคาร">วันอังคาร</option>
+            <option value="พุธ">วันพุธ</option>
+            <option value="พฤหัสบดี">วันพฤหัสบดี</option>
+            <option value="ศุกร์">วันศุกร์</option>
+          </select>
+        </div>
+
+        <div class="action-buttons-group">
+          <button type="button" class="btn btn-secondary" onclick="exportToCSV()" title="ส่งออกเป็นไฟล์ Excel/CSV">
+            <span>📥</span>
+            <span>ส่งออกประวัติ CSV</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="window.print()" title="พิมพ์รายงาน">
+            <span>🖨️</span>
+            <span>พิมพ์</span>
+          </button>
+          <button type="button" class="btn btn-clear" onclick="confirmClearAllData()" style="color: var(--error);">
+            ล้างข้อมูล
+          </button>
+        </div>
+      </div>
+
+      <!-- Records Table -->
+      <div class="records-table-card">
+        <div class="records-table-wrapper">
+          <table class="records-table">
+            <thead>
+              <tr>
+                <th>ลำดับ</th>
+                <th>วันที่ / เวลา</th>
+                <th>ประเภท</th>
+                <th>กลุ่มวัน / สถานที่</th>
+                <th>นักเรียน / ผู้ปฏิบัติหน้าที่</th>
+                <th>ชั่วโมง</th>
+                <th>หลักฐาน</th>
+                <th>หมายเหตุ</th>
+                <th>จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Image Zoom Modal -->
+  <div id="imageModal" class="modal-backdrop" onclick="closeImageModal()">
+    <div class="modal-content-box" onclick="event.stopPropagation()">
+      <div class="modal-img-container">
+        <img id="modalImageTarget" src="" alt="ขยายรูปภาพ">
+      </div>
+      <div class="modal-caption-bar">
+        <h4 id="modalImageCaption">รูปภาพ</h4>
+        <button type="button" class="btn-close-modal" onclick="closeImageModal()">&times;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/formData.js"></script>
+  <script src="js/roster.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

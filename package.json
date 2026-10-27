@@ -1,0 +1,18 @@
+{
+  "name": "nst-volunteer-records",
+  "version": "1.0.0",
+  "description": "แบบบันทึก ชั่วโมง นศท. จิตอาสา โรงเรียนพานทองสภาชนูปถัมภ์ 2569",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "nst",
+    "volunteer",
+    "phanthong",
+    "form"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+
